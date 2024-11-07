@@ -1,0 +1,83 @@
+1107
+
+빠른시작
+데이터 작업하기
+	from torchvision import datasets
+
+모델만들기
+
+모델 매개변수 최적화하기
+  # 예측 오류 계산
+        pred = model(X)
+        loss = loss_fn(pred, y)
+
+        # 역전파
+        loss.backward()
+        optimizer.step()
+        optimizer.zero_grad()
+____________________________________________
+컴퓨터 비전(Vision)을 위한 전이학습(Transfer Learning)
+	
+데이터 불러오기
+data_dir = 'data/hymenoptera_data'
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x])
+                  for x in ['train', 'val']}
+	->	data/hymenoptera_data/train		data/hymenoptera_data/val
+
+일부 이미지 시각화하기
+def imshow(inp, title=None):
+    """tensor를 입력받아 일반적인 이미지로 보여줍니다."""
+    inp = inp.numpy().transpose((1, 2, 0))
+    mean = np.array([0.485, 0.456, 0.406])
+    std = np.array([0.229, 0.224, 0.225])
+    inp = std * inp + mean
+    inp = np.clip(inp, 0, 1)
+    plt.imshow(inp)
+    if title is not None:
+        plt.title(title)
+    plt.pause(0.001)  # 갱신이 될 때까지 잠시 기다립니다.
+
+합성곱 신경망 미세조정
+
+모델 학습하기
+        torch.save(model.state_dict(), best_model_params_path)
+
+
+  # 순전파
+                    # 학습 시에만 연산 기록을 추적
+                    with torch.set_grad_enabled(phase == 'train'):
+                        outputs = model(inputs)
+                        _, preds = torch.max(outputs, 1)
+                        loss = criterion(outputs, labels)
+
+->		torch.set_grad_enabled<<<빈칸괄호 낼수있음
+
+
+합성곱 신경망 미세조정(finetuning)
+
+
+고정된 특징 추출기로써의 합성곱 신경망
+model_conv = torchvision.models.resnet18(weights='IMAGENET1K_V1')
+for param in model_conv.parameters():
+    param.requires_grad = False
+_____________________________________________________
+
+
+적대적 예제 생성		머신러닝 속이기
+
+공격을 받는 모델
+test_loader = torch.utils.data.DataLoader(
+    datasets.MNIST('../data', train=False, download=True, transform=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,)),
+            ])),
+        batch_size=1, shuffle=True)
+
+FGSM 공격
+
+
+테스팅 함수
+
+
+
+
