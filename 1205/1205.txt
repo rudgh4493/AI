@@ -1,0 +1,74 @@
+1205
+
+19일 목요일 2시 
+628호 짝수 626호 홀수
+
+시험범위
+파이토치 기본 생략
+
+이미지
+	비전을 위한 전이학습
+	적대적예제
+	디시간
+
+텍스트
+	nlp 2개
+	시퀀스 투 시퀀스 네트워크 어텐션
+	torchtext 라이브러리
+
+오늘
+NLP: Sequence to Sequence 네트워크와 Attention을 이용한 번역
+
+데이터 파일 불러오기
+
+def normalizeString(s):
+
+
+def readLangs(lang1, lang2, reverse=False):
+
+
+def prepareData(lang1, lang2, reverse=False):
+
+
+
+Seq2Seq 모델
+
+class EncoderRNN(nn.Module):
+
+        self.embedding = nn.Embedding(input_size, hidden_size)
+        self.gru = nn.GRU(hidden_size, hidden_size, batch_first=True)
+        self.dropout = nn.Dropout(dropout_p)
+
+디코더
+Attention 디코더
+
+
+class BahdanauAttention(nn.Module):
+
+    def forward(self, query, keys):
+        scores = self.Va(torch.tanh(self.Wa(query) + self.Ua(keys)))
+        scores = scores.squeeze(2).unsqueeze(1)
+
+
+class AttnDecoderRNN(nn.Module):
+
+    def forward(self, encoder_outputs, encoder_hidden, target_tensor=None):
+
+	   for i in range(MAX_LENGTH):
+            decoder_output, decoder_hidden, attn_weights = self.forward_step(
+                decoder_input, decoder_hidden, encoder_outputs
+            )
+            decoder_outputs.append(decoder_output)
+            attentions.append(attn_weights)
+
+            if target_tensor is not None:
+                # Teacher forcing 포함: 목표를 다음 입력으로 전달
+                decoder_input = target_tensor[:, i].unsqueeze(1) # Teacher forcing
+            else:
+                # Teacher forcing 미포함: 자신의 예측을 다음 입력으로 사용
+                _, topi = decoder_output.topk(1)
+                decoder_input = topi.squeeze(-1).detach()  # 입력으로 사용할 부분을 히스토리에서 분리
+
+
+
+
