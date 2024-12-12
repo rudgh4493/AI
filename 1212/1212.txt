@@ -1,0 +1,35 @@
+1212
+
+def prepareData(lang1, lang2, reverse=False):
+
+input_lang, output_lang, pairs = prepareData('eng', 'fra', True)
+
+
+def get_dataloader(batch_size):
+
+def evaluate(encoder, decoder, sentence, input_lang, output_lang):
+    with torch.no_grad():
+
+        encoder_outputs, encoder_hidden = encoder(input_tensor)
+        decoder_outputs, decoder_hidden, decoder_attn = decoder(encoder_outputs, encoder_hidden)
+
+
+
+
+~시작하기 읽어보고
+시험은 여기서 안나옴
+
+
+코드전체다 작성은 안나오고
+수학적인 건 안해서 안나오고
+전체적인 흐름에 따라서 중요하다 생각되는 코드를 작성하는.괄호치기
+	ex)	( loss.backward() )
+
+이미지비디오3개
+텍스트3개
+
+디시간 개념적으로 어떤 동작을 하는거냐
+626 홀수	628 짝수
+시험 2시	시험 네문제
+
+
